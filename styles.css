@@ -1042,3 +1042,29 @@ textarea:focus,
         --text-muted: #ffffff;
     }
 }
+/* ================= Footer ================= */
+
+@keyframes goldenMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gold-footer {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 420px;
+  background: linear-gradient(270deg, #f7c13d, #f8b121, #ffd700, #f5d142);
+  background-size: 400% 400%;
+  color: #231800;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.45);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  animation: goldenMove 8s ease infinite;
+}
