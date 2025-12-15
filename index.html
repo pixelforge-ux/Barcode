@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بارکد ساز حرفه ای - Professional Barcode Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-barcode"></i>
+                    <h1>بارکد ساز حرفه ای</h1>
+                    <span class="subtitle">Professional Barcode Generator</span>
+                </div>
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="help-btn" id="helpBtn">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="layout-grid">
+                <!-- Left Panel - Controls -->
+                <section class="control-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-cogs"></i> تنظیمات بارکد</h2>
+                    </div>
+
+                    <!-- Barcode Type Selection -->
+                    <div class="form-group">
+                        <label for="barcodeType">نوع بارکد</label>
+                        <select id="barcodeType" class="form-control">
+                            <option value="CODE128">Code 128</option>
+                            <option value="CODE39">Code 39</option>
+                            <option value="EAN13">EAN-13</option>
+                            <option value="EAN8">EAN-8</option>
+                            <option value="UPC">UPC-A</option>
+                            <option value="ITF14">ITF-14</option>
+                            <option value="MSI">MSI</option>
+                            <option value="pharmacode">Pharmacode</option>
+                            <option value="qrcode">QR Code</option>
+                        </select>
+                    </div>
+
+                    <!-- Data Input -->
+                    <div class="form-group">
+                        <label for="barcodeData">داده بارکد</label>
+                        <textarea id="barcodeData" class="form-control" placeholder="متن یا عدد مورد نظر را وارد کنید..."></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span> کاراکتر
+                        </div>
+                    </div>
+
+                    <!-- Additional Options -->
+                    <div class="options-section">
+                        <h3><i class="fas fa-sliders-h"></i> گزینه‌های پیشرفته</h3>
+                        
+                        <!-- Format Options -->
+                        <div class="option-group">
+                            <label>فرمت</label>
+                            <div class="format-options">
+                                <button class="format-btn active" data-format="svg">
+                                    <i class="fas fa-vector-square"></i> SVG
+                                </button>
+                                <button class="format-btn" data-format="canvas">
+                                    <i class="fas fa-image"></i> PNG
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Size Options -->
+                        <div class="option-group">
+                            <label for="barcodeWidth">عرض بارکد</label>
+                            <input type="range" id="barcodeWidth" min="1" max="4" step="0.1" value="2" class="slider">
+                            <span class="slider-value" id="widthValue">2</span>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="barcodeHeight">ارتفاع بارکد</label>
+                            <input type="range" id="barcodeHeight" min="40" max="150" step="5" value="80" class="slider">
+                            <span class="slider-value" id="heightValue">80</span>
+                        </div>
+
+                        <!-- Color Options -->
+                        <div class="option-group">
+                            <label>رنگ‌ها</label>
+                            <div class="color-options">
+                                <div class="color-input-group">
+                                    <label for="lineColor">رنگ خطوط</label>
+                                    <input type="color" id="lineColor" value="#000000" class="color-input">
+                                </div>
+                                <div class="color-input-group">
+                                    <label for="backgroundColor">رنگ پس‌زمینه</label>
+                                    <input type="color" id="backgroundColor" value="#FFFFFF" class="color-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Display Options -->
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="displayValue" checked>
+                                <span class="checkmark"></span>
+                                نمایش متن بارکد
+                            </label>
+                        </div>
+
+                        <div class="option-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="margin">
+                                <span class="checkmark"></span>
+                                نمایش حاشیه
+                            </label>
+                        </div>
+
+                        <!-- Font Options -->
+                        <div class="option-group">
+                            <label for="fontSize">اندازه فونت متن</label>
+                            <input type="range" id="fontSize" min="10" max="30" step="1" value="16" class="slider">
+                            <span class="slider-value" id="fontSizeValue">16</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="generateBtn">
+                            <i class="fas fa-magic"></i> تولید بارکد
+                        </button>
+                        <button class="btn btn-secondary" id="clearBtn">
+                            <i class="fas fa-eraser"></i> پاک کردن
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Right Panel - Preview & Export -->
+                <section class="preview-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-eye"></i> پیش‌نمایش بارکد</h2>
+                    </div>
+
+                    <!-- Barcode Display -->
+                    <div class="barcode-container">
+                        <div id="barcodeDisplay" class="barcode-display">
+                            <div class="placeholder">
+                                <i class="fas fa-barcode"></i>
+                                <p>بارکد شما اینجا نمایش داده خواهد شد</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div class="export-section">
+                        <h3><i class="fas fa-download"></i> خروجی و ذخیره</h3>
+                        <div class="export-buttons">
+                            <button class="export-btn" id="downloadPng">
+                                <i class="fas fa-file-image"></i> PNG
+                            </button>
+                            <button class="export-btn" id="downloadSvg">
+                                <i class="fas fa-file-code"></i> SVG
+                            </button>
+                            <button class="export-btn" id="downloadPdf">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                            <button class="export-btn" id="copyToClipboard">
+                                <i class="fas fa-copy"></i> کپی
+                            </button>
+                            <button class="export-btn" id="printBarcode">
+                                <i class="fas fa-print"></i> چاپ
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Batch Operations -->
+                    <div class="batch-section">
+                        <h3><i class="fas fa-layer-group"></i> عملیات گروهی</h3>
+                        <div class="batch-controls">
+                            <button class="btn btn-outline" id="batchGenerateBtn">
+                                <i class="fas fa-plus-circle"></i> تولید گروهی
+                            </button>
+                            <button class="btn btn-outline" id="importCsvBtn">
+                                <i class="fas fa-file-csv"></i> وارد کردن CSV
+                            </button>
+                            <button class="btn btn-outline" id="exportAllBtn">
+                                <i class="fas fa-archive"></i> خروجی همه
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- History -->
+                    <div class="history-section">
+                        <h3><i class="fas fa-history"></i> تاریخچه</h3>
+                        <div id="historyList" class="history-list">
+                            <p class="no-history">هیچ بارکدی تولید نشده است</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Batch Modal -->
+        <div id="batchModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>تولید گروهی بارکد</h3>
+                    <button class="close-modal" id="closeBatchModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="batchData">داده‌های گروهی (هر خط یک بارکد)</label>
+                        <textarea id="batchData" class="form-control" rows="8" placeholder="داده 1&#10;داده 2&#10;داده 3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="batchCount">تعداد بارکدها: <span id="batchCountDisplay">0</span></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelBatchBtn">انصراف</button>
+                    <button class="btn btn-primary" id="startBatchBtn">شروع تولید</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>راهنما و دستورالعمل</h3>
+                    <button class="close-modal" id="closeHelpModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body help-content">
+                    <div class="help-section">
+                        <h4><i class="fas fa-info-circle"></i> انواع بارکد</h4>
+                        <ul>
+                            <li><strong>Code 128:</strong> پشتیبانی کامل از کاراکترها، مناسب برای صنعتی</li>
+                            <li><strong>Code 39:</strong> حروف و اعداد، استفاده صنعتی گسترده</li>
+                            <li><strong>EAN-13:</strong> 13 رقم، استاندارد فروشگاهی جهانی</li>
+                            <li><strong>EAN-8:</strong> 8 رقم، برای محصولات کوچک</li>
+                            <li><strong>UPC-A:</strong> 12 رقم، استاندارد آمریکای شمالی</li>
+                            <li><strong>QR Code:</strong> داده‌های بزرگ، URL، و متن فارسی</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4><i class="fas fa-keyboard"></i> میانبرهای صفحه کلید</h4>
+                        <ul>
+                            <li><kbd>Ctrl + Enter</kbd> - تولید بارکد</li>
+                            <li><kbd>Ctrl + S</kbd> - ذخیره بارکد</li>
+                            <li><kbd>Ctrl + P</kbd> - چاپ بارکد</li>
+                            <li><kbd>Esc</kbd> - بستن پنجره‌های باز</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h4><i class="fas fa-lightbulb"></i> نکات مفید</h4>
+                        <ul>
+                            <li>برای QR Code می‌توانید متن فارسی و URL وارد کنید</li>
+                            <li>بارکدهای EAN و UPC فقط اعداد را قبول می‌کنند</li>
+                            <li>می‌توانید چندین بارکد را به صورت گروهی تولید کنید</li>
+                            <li>از فایل CSV برای وارد کردن داده‌های زیاد استفاده کنید</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
